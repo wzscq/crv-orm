@@ -17,7 +17,7 @@ type DbConf struct {
 	ConnMaxLifetime int    `json:"connMaxLifetime" mapstructure:"connMaxLifetime"`
 	MaxOpenConns    int    `json:"maxOpenConns" mapstructure:"maxOpenConns"`
 	MaxIdleConns    int    `json:"maxIdleConns" mapstructure:"maxIdleConns"`
-	TLS			    string   `json:"tls" mapstructure:"tls"` //skip-verify
+	Tls		    string   `json:"tls" mapstructure:"tls"` //skip-verify
 }
 
 type DataRepository interface {
