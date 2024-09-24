@@ -69,9 +69,18 @@ func (queryManyToOne *QueryManyToOne) Query(repo DataRepository, parentList *Que
 		slog.Error("Many2one field must have relatedModelId", "field", refField.Field, "model", queryManyToOne.ModelId)
 		return errors.New("Many2one field must have relatedModelId, field:" + refField.Field+" model:"+queryManyToOne.ModelId)
 	}
+
+	if refField.Fields == nil {
+		slog.Error("Many2one field must have fields", "field", refField.Field, "model", queryManyToOne.ModelId)
+		return errors.New("Many2one field must have fields, field:" + refField.Field+" model:"+queryManyToOne.ModelId)
+	}
+
+	if len(*refField.Fields) == 0 {
+		slog.Error("Many2one field must have fields", "field", refField.Field, "model", queryManyToOne.ModelId)
+		return errors.New("Many2one field must have fields, field:" + refField.Field+" model:"+queryManyToOne.ModelId)
+	}
 	//slog.Info("queryManyToOne", "query", "queryManyToOne","parentList",parentList,"refField",refField)
 	filter := queryManyToOne.getFilter(parentList, refField)
-
 	if filter == nil {
 		slog.Error("Many2one field filter is nil", "field", refField.Field, "model", queryManyToOne.ModelId)
 		return nil

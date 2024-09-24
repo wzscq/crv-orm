@@ -10,14 +10,14 @@ import (
 )
 
 type DbConf struct {
-	Server          string
-	User            string
-	Password        string
-	DbName          string
-	ConnMaxLifetime int
-	MaxOpenConns    int
-	MaxIdleConns    int
-	Tls             string
+	Server          string `json:"server" mapstructure:"server"`
+	Password        string `json:"password" mapstructure:"password"`
+	User            string `json:"user" mapstructure:"user"`
+	DbName          string `json:"dbName" mapstructure:"dbName"`
+	ConnMaxLifetime int    `json:"connMaxLifetime" mapstructure:"connMaxLifetime"`
+	MaxOpenConns    int    `json:"maxOpenConns" mapstructure:"maxOpenConns"`
+	MaxIdleConns    int    `json:"maxIdleConns" mapstructure:"maxIdleConns"`
+	TLS			    string   `json:"tls" mapstructure:"tls"` //skip-verify
 }
 
 type DataRepository interface {

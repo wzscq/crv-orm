@@ -92,6 +92,16 @@ func (queryManyToMany *QueryManyToMany) Query(repo DataRepository, parentList *Q
 		return errors.New("Many2many field must have relatedModelId, field:" + refField.Field+" model:"+queryManyToMany.ModelId)
 	}
 
+	if refField.Fields == nil {
+		slog.Error("Many2many field must have fields", "field", refField.Field, "model", queryManyToMany.ModelId)
+		return errors.New("Many2many field must have fields, field:" + refField.Field+" model:"+queryManyToMany.ModelId)
+	}
+
+	if len(*refField.Fields) == 0 {
+		slog.Error("Many2many field must have fields", "field", refField.Field, "model", queryManyToMany.ModelId)
+		return errors.New("Many2many field must have fields, field:" + refField.Field+" model:"+queryManyToMany.ModelId)
+	}
+
 	filter := queryManyToMany.getFilter(parentList, refField)
 	slog.Debug("Many2many filter", "filter", filter)
 

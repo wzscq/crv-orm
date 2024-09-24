@@ -67,6 +67,16 @@ func (queryOneToMany *QueryOneToMany) Query(repo DataRepository, parentList *Que
 		return errors.New("Many2one field must have RelatedField, field:" + refField.Field+" model:"+queryOneToMany.ModelId)
 	}
 
+	if refField.Fields == nil {
+		slog.Error("One2many field must have fields", "field", refField.Field, "model", queryOneToMany.ModelId)
+		return errors.New("One2many field must have fields, field:" + refField.Field+" model:"+queryOneToMany.ModelId)
+	}
+
+	if len(*refField.Fields) == 0 {
+		slog.Error("One2many field must have fields", "field", refField.Field, "model", queryOneToMany.ModelId)
+		return errors.New("One2many field must have fields, field:" + refField.Field+" model:"+queryOneToMany.ModelId)
+	}
+
 	filter := queryOneToMany.getFilter(parentList, refField)
 
 	//执行查询，构造一个新的Query对象进行子表的查询，这样可以实现多层级数据表的递归查询操作
