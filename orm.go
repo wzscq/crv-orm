@@ -21,3 +21,11 @@ func (orm *CrvOrm)InitDefaultRepo(dbConf *DbConf)(error){
 func (orm *CrvOrm)ExecuteQuery(queryParam *QueryParam)(*QueryResult,error){
 	return ExecuteQuery(queryParam,orm.Repo,true)
 }
+
+func (orm *CrvOrm)ProcessFilter(
+	filter *map[string]interface{},
+	filterData *[]FilterDataItem,
+	globalFilterData *map[string]interface{},
+	appDb string) error {
+	return ProcessFilter(filter,filterData,globalFilterData,appDb,orm.Repo)
+}

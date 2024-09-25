@@ -49,6 +49,7 @@ type QueryParam struct {
 	Fields     *[]Field                `json:"fields"`
 	Sorter     *[]Sorter               `json:"sorter,omitempty"`
 	Pagination *Pagination             `json:"pagination,omitempty"`
+	Distinct   bool                    `json:"distinct,omitempty"`
 }
 
 type QueryResult struct {
@@ -70,7 +71,7 @@ func QueryToSQLPARAM(query *QueryParam) (*SQLParam, error) {
 		Summarize: "",
 	}
 	//处理fields
-	sqlParam.Fields = GetQueryFields(query.Fields)
+	sqlParam.Fields = GetQueryFields(query.Fields,query.Distinct)
 	//处理汇总列
 	sqlParam.Summarize = GetSummarizeFields(query.Fields)
 	//处理filter
@@ -93,7 +94,7 @@ func QueryToSQLPARAM(query *QueryParam) (*SQLParam, error) {
 	return sqlParam, nil
 }
 
-func GetQueryFields(fields *[]Field) string {
+func GetQueryFields(fields *[]Field,distinct bool) string {
 	fieldsStr := ""
 	for _, field := range *fields {
 		if field.FieldType == nil {
@@ -107,6 +108,11 @@ func GetQueryFields(fields *[]Field) string {
 		}
 	}
 	fieldsStr = fieldsStr[0 : len(fieldsStr)-1]
+
+	if distinct == true {
+		fieldsStr="distinct "+fieldsStr
+	}
+
 	return fieldsStr
 }
 
